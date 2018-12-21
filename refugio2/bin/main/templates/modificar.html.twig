@@ -1,0 +1,79 @@
+{%  extends 'base.html.twig' %}
+{% block titulo %} modificar animales {% endblock titulo %}
+{% block contenido %}
+	<h1>Ingreso de animales</h1>
+        <form action="actualizar" method="POST">
+        
+        <input type="hidden" name="txtId" id="txtId" value="{{ a.getId() }}" />
+        
+        
+        <table>
+            <tr>
+                <td>
+                    <label>Nombre </label>
+                </td>
+                <td>
+                    <input type="text" name="txtNombre" id="txtNombre" required minlength="3" maxlength="30" value="{{ a.getNombre() }}" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Fecha Ingreso </label>
+                </td>
+                <td>
+                    <input type="date" name="txtFechaIngreso" value="{{ a.getFechaIngreso() }}" id="txtFechaIngreso" required >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Peso </label>
+                </td>
+                <td>
+                    <input type="number" name="txtPeso" id="txtPeso" step="0.1" required min="0,1" max="200"  value="{{ a.getPeso() }}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Familia </label>
+                </td>
+                <td>
+                    <select name="cboFamilia" id="cboFamilia" required>
+                        <option value="">Seleccionar: </option>
+                        {% for familia in familias %}
+                        
+                        <option 
+                        {{ (familia.getId() == a.getRaza().getFamilia().getId())?'selected':'' }}                        
+                        value="{{ familia.getId() }}">{{ familia.getNombre() }}</option>
+                        
+                        {% endfor %}
+                        
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Raza </label>
+                </td>
+                <td>
+                    <select name="cboRaza" id="cboRaza" required>
+                        <option value="">Seleccionar: </option>
+                        {% for raza in razas %}
+                        	<option 
+                        	{{ (raza.getId() == a.getRaza().getId())?'selected':'' }}
+                        	value="{{ raza.getId() }}">{{ raza.getNombre() }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <!--comentario este td fue utilizado para que el boton quede al lado derecho-->
+                <td></td>
+                <td>
+                    <input type="submit" value="Modificar" name="btnModificar" id="btnModificar">
+                </td>
+            </tr>
+        </table>
+         
+        </form>
+        <h3>{{ mensaje }}</h3>
+{% endblock contenido %}
